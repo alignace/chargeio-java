@@ -21,6 +21,7 @@ import com.alignace.chargeio.mapper.JsonMapper;
 import com.alignace.chargeio.model.Card;
 import com.alignace.chargeio.model.Charge;
 import com.alignace.chargeio.model.ChargeOption;
+import com.alignace.chargeio.model.Merchant;
 import com.alignace.chargeio.model.Refund;
 import com.alignace.chargeio.model.RefundOption;
 import com.alignace.chargeio.model.Transaction;
@@ -29,13 +30,13 @@ import com.alignace.chargeio.net.exception.ChargeIOException;
 import com.alignace.chargeio.util.Urls;
 
 public class APIClient {
-	
+
 	private static ChargeIORequester requestor = null;
-	
+
 	private static ChargeIORequester getRequester() {
-		
-		if(requestor == null)
-			requestor =  new ChargeIORequester();
+
+		if (requestor == null)
+			requestor = new ChargeIORequester();
 
 		return requestor;
 	}
@@ -48,7 +49,8 @@ public class APIClient {
 		JsonMapper<ChargeOption> mapper1 = new JsonMapper<ChargeOption>();
 		String json = mapper1.toJson(chargeOption);
 
-		String response = getRequester().postJson(Urls.CHARGE_URL, secretKey, json);
+		String response = getRequester().postJson(Urls.CHARGE_URL, secretKey,
+				json);
 
 		JsonMapper<Charge> mapper2 = new JsonMapper<Charge>();
 		Charge charge = mapper2.fromJson(response, Charge.class);
@@ -98,6 +100,17 @@ public class APIClient {
 
 		return transaction;
 
+	}
+
+	public Merchant getMerchant(String secretKey) throws ChargeIOException,
+			IOException {
+
+		String response = getRequester().get(Urls.MERCHANT_URL, secretKey);
+
+		JsonMapper<Merchant> mapper = new JsonMapper<Merchant>();
+		Merchant merchant = mapper.fromJson(response, Merchant.class);
+
+		return merchant;
 	}
 
 }

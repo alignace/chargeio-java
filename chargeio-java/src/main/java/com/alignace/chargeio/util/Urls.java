@@ -24,6 +24,7 @@ public class Urls {
 	public static final String CARD_URL = BASE_URL + "/cards";
 	public static final String CHARGE_URL = BASE_URL + "/charges";
 	public static final String TRANSACTION_URL = BASE_URL + "/transactions";
+	public static final String MERCHANT_URL = BASE_URL + "/merchant";
 	
 	
 
